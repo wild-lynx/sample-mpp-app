@@ -1,0 +1,3 @@
+gradlew eol=lf binary
+gradlew.bat eol=crlf binary
+gradle/wrapper/gradle-wrapper.jar binary
