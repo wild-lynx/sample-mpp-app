@@ -1,5 +1,8 @@
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 
+// the version of this mpp app
+object AppVersion : Version("1.0")
+
 object GradleWrapper : Version("5.6.4") {
     val distribution = ALL
 }

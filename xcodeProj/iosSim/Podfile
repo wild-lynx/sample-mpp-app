@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'iosSim' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for iosSim
+  pod 'sample_mpp_app', :path => '/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/user-stories/sample-mpp-app'
+
+  target 'iosSimTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'iosSimUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

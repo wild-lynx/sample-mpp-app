@@ -7,6 +7,12 @@ plugins {
     kotlin("multiplatform")
     kotlin("android.extensions")
     kotlin("plugin.serialization")
+    /*
+    * The plugin:
+    * — Adds both debug and release frameworks as output binaries for all iOS and macOS targets.
+    * - Creates a `podspec` Gradle task which generates a podspec file for the given project.
+    * */
+    kotlin("native.cocoapods")
 }
 
 val javaVersion = JavaVersion.VERSION_1_8
@@ -19,7 +25,7 @@ android {
         minSdkVersion(24) // required to be able to use static interfaces in okhttp
         targetSdkVersion(29)
         versionCode = 1
-        versionName = "1.0"
+        versionName = AppVersion.version
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -55,6 +61,8 @@ dependencies {
     commonMainImplementation(enforcedPlatform(kotlinx("coroutines-bom", Coroutines.version)))
 }
 
+version = AppVersion.version
+
 kotlin {
     val android = android("androidApp") {
         compilations.all {
@@ -63,12 +71,31 @@ kotlin {
     }
 
     // Create and configure iOS simulator target.
-    val iosSim = iosX64("iosSim") {
-        binaries {
-            framework {
-                baseName = "iOS-app"
-            }
-        }
+    /*
+    * We may need several binaries to use it with Xcode:
+    * - iOS arm64 debug --- the binary to run the iOS device in debug mode
+    * - iOS arm64 release --- the binary to include into a release version of an app
+    * - iOS x64 debug --- the binary for iOS simulator, which uses the desktop mac CPU
+    *
+    * Note that `native.cocoapods` enables by default generation of debug and release
+    * frameworks as output binaries for all iOS and macOS targets.
+    * See more here: https://kotlinlang.org/docs/reference/native/cocoapods.html
+    * */
+    val iosSim = iosX64("iosSim") { }
+
+    // NB: Kotlin/Native supports ObjC pods only!
+    /*
+    * Here we configure podfile for the project.
+    * With cocoapods (enabled by `native.cocoapods` plugin),
+    * we don't need to generate Xcode framework anymore;
+    * the K/N part, instead, is imported into Xcode via
+    * cocoapods mechanism.
+    * A short and clear intro is here: https://medium.com/@yuyaHorita/setup-kotlin-native-project-with-cocoapods-7036dd72366f
+    * */
+    cocoapods {
+        // Configure fields required by CocoaPods.
+        summary = "A Kotlin/Native module for iOS sample app"
+        homepage = "https://github.com/wild-lynx/sample-mpp-app"
     }
 
     sourceSets {
@@ -154,35 +181,3 @@ kotlin {
         }
     }
 }
-
-/*
-* Simplify the setup of our iOS Framework in the Xcode project model
-*
-* We need several binaries from the framework to use it with Xcode:
-* - iOS arm64 debug --- the binary to run the iOS device in debug mode
-* - iOS arm64 release --- the binary to include into a release version of an app
-* - iOS x64 debug --- the binary for iOS simulator, which uses the desktop mac CPU
-* */
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-
-    //selecting the right configuration for the iOS framework depending on the Xcode environment variables
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework =
-        kotlin.targets.getByName<KotlinNativeTarget>("iosSim").binaries.getFramework(mode)
-
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-
-    doLast {
-        val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n")
-        gradlew.setExecutable(true)
-    }
-}
-
-tasks.getByName("build").dependsOn(packForXcode)
