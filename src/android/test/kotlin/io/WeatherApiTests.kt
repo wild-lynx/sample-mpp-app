@@ -6,7 +6,7 @@ import io.ktor.util.InternalAPI
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import util.getTheWeather
+import util.requestTheWeather
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -74,7 +74,7 @@ class WeatherApiTests {
         val resultWeatherList =
             mutableListOf<WeatherApi.Weather>() // empty list, so the default city ($defaultCity) value should be used
         val deferred = async {
-            getTheWeather(resultWeatherList, weatherApi, citiesList = mutableListOf())
+            requestTheWeather(resultWeatherList, weatherApi, citiesList = mutableListOf())
             assertEquals(resultWeatherList[0].name, defaultCity)
         }
         deferred.await()

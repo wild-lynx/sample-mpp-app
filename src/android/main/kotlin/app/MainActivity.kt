@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import util.WeatherListViewAdapter
 import util.getDeviceModel
 import util.getFullDeviceInfo
-import util.getTheWeather
+import util.requestTheWeather
 import kotlin.coroutines.CoroutineContext
 
 @InternalAPI // to allow usage of `OkHttpEngine` in `showTheWeather` fun
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             try {
                 // using the explicit syntax instead of default value for $citiesList
                 // due to https://github.com/Kotlin/kotlinx.coroutines/issues/1647
-                getTheWeather(resultWeatherList, weatherApi, cList)
+                requestTheWeather(resultWeatherList, weatherApi, cList)
                 displayTheWeather(resultWeatherList)
             } catch (e: Exception) {
                 weatherDebugInfo.text = e.message.toString()

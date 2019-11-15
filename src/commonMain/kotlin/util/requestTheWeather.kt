@@ -7,7 +7,7 @@ import io.defaultCitiesList
 The function is multiplatform because of the different
 `kotlinx.coroutines` solutions of IO treatment for iOS and Android
 */
-expect suspend fun getTheWeather(
+expect suspend fun requestTheWeather(
     resultWeatherList: MutableList<WeatherApi.Weather>,
     weatherApi: WeatherApi,
     citiesList: MutableList<String> = defaultCitiesList

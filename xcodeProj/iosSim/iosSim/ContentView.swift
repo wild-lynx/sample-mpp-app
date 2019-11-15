@@ -12,7 +12,8 @@ import sample_mpp_app
 struct ContentView: View {
     
     var body: some View {
-        Text(GetDeviceModelKt.getFullDeviceInfo())
+//        Text(GetDeviceModelKt.getFullDeviceInfo())
+        Text(WeatherAdapter().getTheWeather())
     }
 }
 

@@ -4,7 +4,7 @@ import io.WeatherApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-actual suspend fun getTheWeather(
+actual suspend fun requestTheWeather(
     resultWeatherList: MutableList<WeatherApi.Weather>,
     weatherApi: WeatherApi,
     citiesList: MutableList<String> // has default value in the `expect` part
