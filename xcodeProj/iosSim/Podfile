@@ -6,7 +6,7 @@ target 'iosSim' do
   use_frameworks!
 
   # Pods for iosSim
-  pod 'sample_mpp_app', :path => '/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/user-stories/sample-mpp-app'
+  pod 'app', :path => '/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/testing/sample-mpp-app/app'
 
   target 'iosSimTests' do
     inherit! :search_paths

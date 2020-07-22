@@ -1,23 +1,16 @@
 PODS:
-  - DeviceKit (2.3.0)
-  - sample_mpp_app (1.0):
-    - DeviceKit (~> 2.0)
+  - app (1.0)
 
 DEPENDENCIES:
-  - sample_mpp_app (from `/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/user-stories/sample-mpp-app`)
-
-SPEC REPOS:
-  trunk:
-    - DeviceKit
+  - app (from `/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/testing/sample-mpp-app/app`)
 
 EXTERNAL SOURCES:
-  sample_mpp_app:
-    :path: "/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/user-stories/sample-mpp-app"
+  app:
+    :path: "/Users/jetbrains/TestProjects/_tasks/MPP/_MMPP/testing/sample-mpp-app/app"
 
 SPEC CHECKSUMS:
-  DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
-  sample_mpp_app: e865e21493ab03f5e053e992a50ac6cbac80b7fc
+  app: 407f11671aae0e7e84991192ffe59b1674fe6c64
 
-PODFILE CHECKSUM: 9d678e594e5383f7e103f05d2664148c72abdd17
+PODFILE CHECKSUM: c33a37948610838b32eac7d8bb4bf804195b7a2e
 
 COCOAPODS: 1.8.4

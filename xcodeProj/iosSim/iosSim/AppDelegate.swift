@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  iosSim
-//
-//  Created by Lilia on 14/11/2019.
-//  Copyright © 2019 LA. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

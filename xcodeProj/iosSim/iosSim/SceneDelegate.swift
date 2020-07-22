@@ -8,20 +8,33 @@
 
 import UIKit
 import SwiftUI
+import app
+
+
+struct ContentView: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+    }
+}
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(text: "Hello world")
+    }
+}
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-
+    
+    private func setupView(text: String, scene: UIScene) {
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
-
+        let contentView = ContentView(text: text)
+         
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -29,6 +42,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+    }
+
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        let deviceInfo = GetDeviceModelKt.getFullDeviceInfo()
+        
+        setupView(text: deviceInfo, scene: scene)
+        
+        WeatherAdapter().getTheWeather(callback: { (weatherInfo: String) -> Void in
+            self.setupView(text: deviceInfo + "\n\n" + weatherInfo, scene: scene)
+        })
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,7 +86,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

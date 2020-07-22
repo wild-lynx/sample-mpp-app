@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import iosSim
+import sample_mpp_app
 
 class iosSimTests: XCTestCase {
 
@@ -22,6 +23,8 @@ class iosSimTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let deviceInfo = GetDeviceModelKt.getFullDeviceInfo()
+        XCTAssert(deviceInfo.contains("iOS"))
     }
 
     func testPerformanceExample() {
