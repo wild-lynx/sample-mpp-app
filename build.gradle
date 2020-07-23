@@ -5,6 +5,13 @@ buildscript {
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven {
+            url "https://packages.jetbrains.team/maven/ktor-dev"
+            credentials {
+                username = "$usr"
+                password = "$pwd"
+            }
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0-beta04'
@@ -18,4 +25,11 @@ repositories {
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    maven {
+        url "https://packages.jetbrains.team/maven/ktor-dev"
+        credentials {
+            username = "$usr"
+            password = "$pwd"
+        }
+    }
 }

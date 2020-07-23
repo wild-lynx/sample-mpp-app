@@ -13,6 +13,14 @@ pluginManagement {
         mavenCentral()
 
         maven { url 'https://plugins.gradle.org/m2/' }
+
+        maven {
+            url "https://packages.jetbrains.team/maven/ktor-dev"
+            credentials {
+                username = "$usr"
+                password = "$pwd"
+            }
+        }
     }
 }
 rootProject.name = 'sample-mpp-app'
