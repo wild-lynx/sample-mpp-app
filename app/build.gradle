@@ -136,12 +136,17 @@ kotlin {
             }
         }
     }
+    sourceSets {
+        all {
+            languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
+        }
+    }
 
     sourceSets {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-                implementation "io.ktor:ktor-client:$ktor_version"
+                implementation "io.ktor:ktor-client-cio:$ktor_version"
                 implementation "io.ktor:ktor-client-json:$ktor_version"
                 implementation("io.ktor:ktor-client-serialization:$ktor_version")
                 implementation "io.ktor:ktor-client-core:$ktor_version"
@@ -151,7 +156,7 @@ kotlin {
                     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
                     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
                 } else {
-                    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+                    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization_version"
                     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
                 }
             }
@@ -192,6 +197,7 @@ kotlin {
                     implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
                     implementation("io.ktor:ktor-client-ios:$ktor_version")
                 }
+                implementation("io.ktor:ktor-client-ios:$ktor_version")
             }
         }
         iosTest {

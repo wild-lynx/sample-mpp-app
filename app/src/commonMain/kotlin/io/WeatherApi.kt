@@ -7,8 +7,9 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import util.nonstrict
+import weatherApiKey
 
 class WeatherApi(private val engine: HttpClientEngine) {
     companion object {
@@ -25,11 +26,10 @@ class WeatherApi(private val engine: HttpClientEngine) {
         }
     }
 
-    @UseExperimental(UnstableDefault::class)
     private val client by lazy {
         HttpClient(engine) {
             install(JsonFeature) {
-                serializer = KotlinxSerializer(Json.nonstrict)
+                serializer = KotlinxSerializer(Json{nonstrict})
             }
         }
     }
